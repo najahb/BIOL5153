@@ -1,13 +1,12 @@
 # Najah Biggs
 
 ------------------ 	     
-1577 N. Izard Lane 
 
-Fayetteville, AR 			
+Fayetteville, AR 72704	
 
 nabiggs@uark.edu
 
-810-515-9200
+479-575-2000
 
 ------------------ 				       
 
