@@ -4,6 +4,10 @@ import csv
 import argparse
 from Bio import SeqIO
 
+# function to return the reverse complement of a feature
+def rev_comp(feature):
+    return feature.reverse_complement()
+
 # inputs: 1) GFF file, 2) corresponding genome sequence (FASTA format)
 
 # create an argument parser object
@@ -34,11 +38,14 @@ with open(args.gff, 'r') as gff_in:
     for line in reader:
         start  = line[3]
         end    = line[4]
+        feature = genome.seq[int(start)-1:int(end)]
         strand = line[6]
+        if strand == '-':
+            feature = rev_comp(feature)
         
         # extract the sequence of each feature from the genome
         print(">watermelon %s" % line[8])
-        print(genome.seq[int(start)-1:int(end)])
+        print(feature)
        
 
 
