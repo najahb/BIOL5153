@@ -35,19 +35,34 @@ with open(args.gff, 'r') as gff_in:
     reader = csv.reader(gff_in, delimiter='\t')
 
     # loop over all the lines in our reader object (i.e., parsed file)
+    GENES = []
+    CDS = []
     for line in reader:
+        species = line[0].replace(' ','_')
+        region = line[2]
         start  = line[3]
         end    = line[4]
         feature = genome.seq[int(start)-1:int(end)]
         strand = line[6]
-        if strand == '-':
-            feature = rev_comp(feature)
-        
+        gene = line[8].split()[1]
+        if region == 'CDS':
+            if strand == '-':
+                feature = rev_comp(feature)
+            if gene not in GENES:
+                GENES.append('%s_%s' % (species,gene))
+                CDS.append('')
+            CDS[-1] += str(feature)
+            
         # extract the sequence of each feature from the genome
         print(">watermelon %s" % line[8])
         print(feature)
        
 
-
         # extract the sequence
         print(len(genome.seq))
+
+        # print coding sequences for all genes
+        print()
+        for i in range(len(GENES)):
+            print('>%s' % GENES[i])
+            print(CDS[i])
